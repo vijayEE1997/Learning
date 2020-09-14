@@ -46,7 +46,7 @@
 					<configuration>
 						<scanIntervalSeconds>10</scanIntervalSeconds>
 						<webApp>
-							<contextPath>/EMS</contextPath>
+							<contextPath>/JenkinsWebApp</contextPath>
 						</webApp>
 						<httpConnector>
 							<port>9090</port>
