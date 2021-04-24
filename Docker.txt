@@ -1,0 +1,84 @@
+DOCKER
+	
+	1. Light weight open secure platform
+	2. Simplify building, shipping, running apps
+	3. shipping container system code
+	4. Runs on Linux or windows server
+	5. for Mac and Windows runs on Virtual Machines
+	6. Relies on Images and Containers 
+
+Docker Image
+	>>>> Its a read only template composed of layered filesystems used to share common files and 
+	     create Docker container instances
+	1. Its used to build a Containers
+	2. Blueprint used to run in container
+	3. Running instances of Container
+
+Docker Container
+	>>>> Isolated and secured shipping(between environments) container created from image that can be run,started, stopped, moved and deleted. 
+	
+
+Docker runs on Docker Client (Docker Ship) >>>>> Linux/Windows >>>>  	Docker Engine (Daemon)  >>>>> Linux/windows_server container support
+
+Host OS >>> Hypervisor >>> [ Guest OS(1,2,...)>>>> bins/libs  >>> apps)] VM
+Host OS >>> Docker Engine >>>> [ bins/libs  >>> apps ] Containers
+
+Benefits
+	1. Accelerate Developer Onboarding (different containers for diff members)
+	2. Eliminate App or version Conflict (different versions in different containers)
+	3. Environment consistency (dev -> staging -> prod)
+	4. Ship software faster (dev -> -------- -> prod)
+
+Docker ToolBox  --- windows 7,8,10 (uses Virtual Box , will use Docker Machine)
+Docker Dekstop  --- windows 10 pro( use Hyper V) or Mac OS (Hyperkit)
+Docker Engine   --- Linux
+
+
+
+
+Docker Machine    ---> To create and manage for local machine, cloud machines, (configure Docker client to talk with machine) (for only Docker Toolbox)
+Docker Client     ---> Interact with Docker Engine , build and manage image, run and manage container
+Docker Compose    ---> To deal with multiple containers
+Docker Kitematics ---> GUI for Docker Images , ( search, create, run  and manage container)
+
+
+Docker cmd
+	docker pull <image name>				: pull image
+	docker run <image name>					: create cantainer
+	docker run -p 2224:80 <image name>			: create cantainer
+	docker run -p 2224:80 -v var/www <image name>		: create cantainer and container volume (var/www)
+	docker run -p 2224:80 -v $(pwd):var/www <image name>	: create cantainer and customized container volume (var/www)
+	docker inspect mycontainer				: loacting a volume
+	docker images						: List all images
+	docker ps						: list running containers
+	docker ps -a						: list all containers
+	docker rmi <image id>					: Delete docker image by id
+	docker rm <container id>				: Delete docker container
+	docker rm -v <container id>				: Delete Volume 
+	docker run -p 8080:3000 -v $(pwd):/var/www -w "/var/www" node npm start		: mac or linux
+	docker run -p 8080:3000 -v %cd%:/var/www -w "/var/www" node npm start		: windows cmd
+	docker build						: textfile to image
+	docker build -f <dockerfile name> -t <name any>/<image name> .
+						tag			dockerfile path ( . )
+	docker push <username>/<image name>
+
+How to get source code in a container.
+
+	Thin Read/Write layer : Container  (On Deleting container we will lost this layer)
+	^^^^^^^^^^
+	|||||||||| 
+	
+	Image 1	-|
+	Image 2	-| Images layer (Read Only)
+	Image 3 -|
+
+Docker Volume : Volume is a special type of directory ina container typically referred to as "Data volume".
+		We can share and reuse amoung containers
+		update to an image won't affect volume
+		data volume can persisted after the container get deleted.
+
+When we write in volume we actually writes in folder mounted on Docker HOst( host OS). so, after deleting container changes still persist.
+
+	
+Docker File ---> build intructions to generate a layered file system ---> image (Text file used to create image)
+
