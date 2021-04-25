@@ -48,19 +48,21 @@ Docker cmd
 	docker run -p 2224:80 <image name>			: create cantainer
 	docker run -p 2224:80 -v var/www <image name>		: create cantainer and container volume (var/www)
 	docker run -p 2224:80 -v $(pwd):var/www <image name>	: create cantainer and customized container volume (var/www)
-	docker inspect mycontainer				: loacting a volume
+	docker inspect <container name>				: locating a volume
+	docker network inspect <network name>			: locating network
 	docker images						: List all images
 	docker ps						: list running containers
 	docker ps -a						: list all containers
 	docker rmi <image id>					: Delete docker image by id
-	docker rm <container id>				: Delete docker container
+	docker rm <container id>				: Delete docker container 
 	docker rm -v <container id>				: Delete Volume 
-	docker run -p 8080:3000 -v $(pwd):/var/www -w "/var/www" node npm start		: mac or linux
-	docker run -p 8080:3000 -v %cd%:/var/www -w "/var/www" node npm start		: windows cmd
+	docker run -p 8080:3000 -v $(pwd):/var/www -w "/var/www" node npm start			: mac or linux
+	docker run -p 8080:3000 -v %cd%:/var/www -w "/var/www" node npm start			: windows cmd
 	docker build						: textfile to image
 	docker build -f <dockerfile name> -t <name any>/<image name> .
 						tag			dockerfile path ( . )
 	docker push <username>/<image name>
+
 
 How to get source code in a container.
 
@@ -82,3 +84,14 @@ When we write in volume we actually writes in folder mounted on Docker HOst( hos
 	
 Docker File ---> build intructions to generate a layered file system ---> image (Text file used to create image)
 
+Container Linking
+
+		docker network ls
+		docker exec <container name> <command to run in container>
+	1. Legacy Linking (based on names of containers) 
+		docker run -d --name <image name1> <alias name>
+		docker run -d -p 3000:3000 --link <image name1>:<alias name1> --name <images name2>
+	2. Custom Bridge Network (Isolated network only for container which are part of that bridge)	
+		docker network create --driver bridge(type of driver : bridge) <custom network name>				: creating network
+		docker run -d (in background) --net=<network name>  --name <images name> <alias name>	: run in network and link by name
+ 
