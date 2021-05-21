@@ -1,0 +1,4 @@
+Benefits of Unit testing
+	1. Quick feedback
+	2. Automated regression checking
+	3. Design aid

@@ -1,0 +1,67 @@
+Instanciate Kafka Producers with properties object 
+	Required properties	
+	props.put(key,value);	new Properties ///core java Properties Class
+	1. bootstrap.servers			//supply list of brokers to connect to//connects to 1st in list
+	2. key.serializer				//message serializer and deserializer
+	3. value.serializer				//message serializer and deserializer
+	4. .....
+
+ProducerConfig 
+ProducerRecord //Message
+	Topic (Mandetory)
+	Value
+	Partition(Int)
+	Timestamp(Long)     // server.properties (inside this file) > log.message.timestamp.type = [CreateTime,LogAppendTime]  //CreateTime:default ,by producer ;LogAppendTime,broker time when commit log
+	key
+	value(Mandetory)
+	
+ProducerRecord ----> SEND ----> Serializer<T> may be StringSerializer -----> Partitioner (direct      : given partition in ProducerRecord,
+																						 roundrobin  : given key in record,
+																						 key mod-hash: given in ProducerConfig based on key mod
+																						 custom		 : Custom Code)
+																						 
+Partitioner (Default Partitioner) -----> RecordAccumulator (In Memory) { TopicPartition:RecordBatch,
+																		 TopicPartition:RecordBatch,
+																	     TopicPartition:RecordBatch} 
+																		 
+															 batch.size :maximum number of byte buffered per each RecordBatch 
+										Message Buffering :	 buffer.memory (all batch.size combo)
+															 max.block.ms (how many millisecond send method is blocked) if buffer.memory gets full
+															 limger.ms    (actual batch.size < batch.size : then its comes in action)
+															 
+					    				RecordAccumulator (In Memory) ---> Broker ---->Record.metadata(back to Producer) success n failure data
+
+Broker Acknowledgement ("acks")
+	0 : fire and forget
+	1 : leader acknowledge
+	2 : all ISR acknowledge
+	
+Broker responds with error
+	retries					(no of retry)
+	retry.backoff.ms		(time in ms till retry) 
+
+Order Guarantee	
+		1. Message order by Partition
+				No global order across partition
+		2. Can get complicated with error
+				retries,retry.backoff.ms
+				max.in.flight.request.per.connection
+		3. Delivery semantics
+				atleast,atmost,only-once
+				
+				
+Instanciate Kafka Producers with properties object 
+	Required properties	
+	props.put(key,value);	new Properties ///core java Properties Class
+	1. bootstrap.servers			//supply list of brokers to connect to//connects to 1st in list
+	2. key.deserializer				//message serializer and deserializer
+	3. value.deserializer				//message serializer and deserializer
+	4. .....
+	
+.subscribe(list of topic)
+.assign(partition)
+.poll()  // single API handling all Consumer-Broker interactions 
+		 // single threaded operation
+		 
+offset
+	store offset values in "__consumer_offsets" topic
