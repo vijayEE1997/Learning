@@ -65,3 +65,32 @@ Instanciate Kafka Producers with properties object
 		 
 offset
 	store offset values in "__consumer_offsets" topic
+
+
+KAFKA STREAM
+		kafka ---> Kafka streams ---> KSQLDB
+		its a event streaming platform
+
+	what kafka stream provides?
+		1. Nouns : what
+		2. Vervs : how
+		I’ve found it helpful to think of tables as representing nouns (users, songs, cars) 
+		and streams as verbs (buys, plays, drives). This is because with a noun, we mostly want 
+		the current state of that noun: the current document or the current flight. But with verbs, 
+		we need to see the trail of how we got here: the history of edits to this document or the path 
+		this plane took to its destination.
+		3. Scalability
+		4. Reliability
+
+1. Process:
+Kafka Topic (cars-passengers(un even in each car))---->Kafka stream (drop all passengers) ---> kafka topic(bus)
+
+2. 
+Kafka Topic (cars-passengers(un even in each car))---->Kafka stream (drop all passengers) ---> kafka topic(bus)
+
+Kafka Topic (cars-passengers(un even in each car))---->Kafka stream (drop all passengers) ---> kafka topic(bus)
+
+The 2 streams are different APPLICATION INSTANCES 
+
+Kafka Topic (cars-passengers(un even in each car))---->Kafka stream (drop all passengers) ---> kafka topic(bus)Kafka stream (drop all passengers) ---> kafka topic(Ship)
+	Chaining of Processes is PROCESSOR TOPOLOGY
